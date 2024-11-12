@@ -1,0 +1,136 @@
+---
+title: "teror"
+author: '211987987'
+date: "2024-11-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Filter Israel
+
+```{r}
+data = read.csv("globalterrorismdb_0718dist.csv")
+```
+
+
+```{r}
+IL <- data[data$country_txt == "Israel", ]
+
+```
+
+## attacktype1_txt details
+
+```{r}
+unique(IL$attacktype1_txt)
+```
+
+```{r}
+
+# Count occurrences of each unique value in IL$attacktype1_txt
+table(IL$attacktype1_txt)
+
+```
+
+## year details
+
+```{r}
+table(IL$iyear)
+
+```
+
+```{r}
+write.csv(IL, "IL_data.csv", row.names = FALSE)
+
+```
+
+## gsubname details
+
+```{r}
+unique(IL$gsubname)
+
+# Count occurrences of each unique value in IL$attacktype1_txt
+table(IL$gsubname)
+
+```
+
+## למצוא קשר בין nperps ובין nkill
+
+```{r}
+
+unique(IL$nperps)
+
+unique(IL$nkill)
+
+
+```
+
+```{r}
+# Filter the data for Israel
+IL <- data[data$country_txt == "Israel", ]
+
+# Filter the data where nperps is less than 0
+IL_filtered <- IL[IL$nperps > 0, ]
+
+# Check unique values of nperps and nkill for filtered data (optional)
+unique(IL_filtered$nperps)
+unique(IL_filtered$nkill)
+
+# Create scatter plot for the filtered data
+library(ggplot2)
+
+ggplot(IL_filtered, aes(x = nperps, y = nkill)) +
+  geom_point() + 
+  labs(title = "Scatter plot of nperps vs nkill in Israel (nperps < 0)",
+       x = "Number of Perpetrators (nperps)",
+       y = "Number of Kills (nkill)") +
+  theme_minimal()
+
+```
+
+
+
+```{r}
+# Filter the data for Israel
+IL <- data[data$country_txt == "Israel", ]
+
+# Filter the data where nperps is less than 0
+IL_filtered <- IL[IL$nperps > 0, ]
+
+# Create scatter plot with more details
+library(ggplot2)
+
+ggplot(IL_filtered, aes(x = nperps, y = nkill)) +
+  geom_point(aes(color = attacktype1_txt, shape = factor(success)), size = 3) +  # Points colored by attack type and shaped by success
+  labs(
+    title = "Scatter plot of nperps vs nkill in Israel (nperps < 0)",
+    x = "Number of Perpetrators (nperps)",
+    y = "Number of Kills (nkill)",
+    subtitle = "Data filtered where number of perpetrators (nperps) is less than 0",
+    caption = "Data source: Global Terrorism Database"
+  ) +
+  scale_color_brewer(palette = "Set1") +  # Using a color palette for attack types
+  scale_shape_manual(values = c(16, 17)) +  # Different shapes for success (1 = circle, 0 = triangle)
+  theme_minimal() +
+  theme(
+    legend.position = "top",  # Position legend at the top
+    plot.title = element_text(hjust = 0.5),  # Center the title
+    plot.subtitle = element_text(hjust = 0.5),  # Center the subtitle
+    plot.caption = element_text(hjust = 1)  # Align caption to the right
+  ) +
+  stat_smooth(method = "lm", aes(group = 1), color = "red", linetype = "dashed")  # Add a regression line
+
+```
+
+```{r}
+library(tidyverse)
+
+
+
+str(IL)
+
+```
+
+
