@@ -1,0 +1,23 @@
+eventid
+iyear
+imonth
+iday
+country
+city
+latitude
+longitude
+nperps
+nkill
+nwound
+
+
+@@@
+אופציונלי
+location תיאור ספציפי של מיקום לדגומא החוף של אשקלון , המנוש של מקסים
+success האם הפיגוע הצליח
+attacktype1 סכין פיצוץ חטיפה 
+suicide האם התאבד או לא 
+targtype1 מטרה אזרחית צבאית וכו
+weaptype1_txt סוג נשק
+gname קבוצה טרור שתקפה 
+extended האם האירוע נמשך יותר מ24 שעות 
