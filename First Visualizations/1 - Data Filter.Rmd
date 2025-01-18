@@ -1,5 +1,5 @@
 ---
-title: "terror"
+title: "1 - Data Filter"
 author: '211987987'
 date: "2024-11-12"
 output: html_document
@@ -7,12 +7,15 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
 ```
 
 ## Filter Israel
 
 ```{r}
-data = read.csv("globalterrorismdb_0718dist.csv")
+data = read.csv("../Data/globalterrorismdb_0718dist.csv")
 ```
 
 
@@ -21,10 +24,66 @@ IL <- data[data$country_txt == "Israel", ]
 
 ```
 
+```{r}
+write.csv(IL, "IL_data.csv", row.names = FALSE)
+
+```
+
+
+```{r}
+# Specify the columns to keep
+selected_columns <- c(
+  "eventid", "iyear", "imonth", "iday", "country", "city",
+  "latitude", "longitude", "nperps", "nkill", "nwound",
+  "location", "success", "attacktype1", "suicide",
+  "targtype1", "weaptype1_txt", "gname", "extended"
+)
+
+# Filter the dataset to keep only the specified columns
+filtered_data <- IL[selected_columns]
+
+# View the filtered dataset
+print(filtered_data)
+
+```
+```{r}
+missing_columns <- setdiff(selected_columns, colnames(IL))
+print(missing_columns)  # Columns that are not in the dataset
+
+```
+
+
+
+```{r}
+# Define column names
+selected_columns <- c(
+  "eventid", "iyear", "imonth", "iday", "country", "city",
+  "latitude", "longitude", "nperps", "nkill", "nwound",
+  "location", "success", "attacktype1", "suicide",
+  "targtype1", "weaptype1_txt", "gname", "extended"
+)
+
+# Filter the dataset to keep only the specified columns
+filtered_data <- IL %>% select(all_of(selected_columns))
+
+# Calculate unique counts and data types
+result <- data.frame(
+  Column = names(filtered_data),
+  Unique_Count = sapply(filtered_data, function(col) length(unique(col))),
+  Type = sapply(filtered_data, class)
+)
+
+# Print the result
+print(result)
+
+
+```
+
+
 ## attacktype1_txt details
 
 ```{r}
-unique(IL$attacktype1_txt)
+unique(IL$iday)
 ```
 
 ```{r}
@@ -38,11 +97,6 @@ table(IL$attacktype1_txt)
 
 ```{r}
 table(IL$iyear)
-
-```
-
-```{r}
-write.csv(IL, "IL_data.csv", row.names = FALSE)
 
 ```
 
@@ -125,10 +179,6 @@ ggplot(IL_filtered, aes(x = nperps, y = nkill)) +
 ```
 
 ```{r}
-library(tidyverse)
-
-
-
 str(IL)
 
 ```
