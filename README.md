@@ -1,6 +1,8 @@
 # ויזואליזציה של נתוני טרור בישראל - דוח מסכם
  
-[DashBoard](https://terror-attacks-visualization-dashboard.streamlit.app/)
+[DashBoard App](https://terror-attacks-visualization-dashboard.streamlit.app/)  
+
+[DashBoard GitHub Repository](https://github.com/Yarin-Shohat/Terror-Attacks-Visualization-Project)
 
 ## 📊 תיאור הפרויקט
 פרויקט זה מציג ניתוח מקיף של אירועי טרור בישראל באמצעות דשבורד אינטראקטיבי שפותח ב-Streamlit. הדשבורד מאפשר חקירה ויזואלית של מגמות, תבניות והתפלגויות של אירועי טרור לאורך זמן.
